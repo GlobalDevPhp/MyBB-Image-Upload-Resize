@@ -1,5 +1,10 @@
 Image Upload Resizer v0.1
-////////////////////
 
-IUR is an image resizer that works during the upload process. it uses MyBB thumbnail code for the resizing.
+
+'Image Upload Resize' is a plugin for MyBB 1.8.18 that will resize members uploaded images on the fly.
+
+this is an Alpha release and is not intended for live sites yet so use at your own risk.
+
+I will be creating a post on the MyBB community forum.
+
 
