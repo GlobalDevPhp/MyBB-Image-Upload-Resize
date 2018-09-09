@@ -52,8 +52,8 @@ function iur_install()
 	
 		$settings_group = array(
 		"name" 			=> "Image_Upload_Resize",
-		"title"			=> $db->escape_string($lang->iur_title),
-		"description" 	=> $db->escape_string($lang->iur_descr),
+		"title"			=> $lang->iur_title,
+		"description" 	=> $lang->iur_descr,
 		"disporder" 	=> "1",
 		"isdefault" 	=> "no"
 	);
@@ -63,8 +63,8 @@ function iur_install()
 	
 		$setting = array(
 		"name" 			=> "iur_enable",
-		"title" 		=> $db->escape_string($lang->iur_enable_title),
-		"description" 	=> $db->escape_string($lang->iur_enable_descr),
+		"title" 		=> $lang->iur_enable_title,
+		"description" 	=> $lang->iur_enable_descr,
 		"optionscode" 	=> "yesno",
 		"value" 		=> "1",
 		"disporder" 	=> "2",
@@ -74,8 +74,8 @@ function iur_install()
 	
 		$setting = array(
 		"name" 			=> "iur_width_size",
-		"title" 		=> $db->escape_string($lang->iur_size_width_title),
-		"description" 	=> $db->escape_string($lang->iur_size_width_descr),
+		"title" 		=> $lang->iur_size_width_title,
+		"description" 	=> $lang->iur_size_width_descr,
 		"optionscode" 	=> "numeric",
 		"value" 		=> "1200",
 		"disporder" 	=> "3",
@@ -85,8 +85,8 @@ function iur_install()
 	
 		$setting = array(
 		"name" 			=> "iur_height_size",
-		"title" 		=> $db->escape_string($lang->iur_size_height_title),
-		"description" 	=> $db->escape_string($lang->iur_size_height_descr),
+		"title" 		=> $lang->iur_size_height_title,
+		"description" 	=> $lang->iur_size_height_descr,
 		"optionscode" 	=> "numeric",
 		"value" 		=> "1200",
 		"disporder" 	=> "4",
