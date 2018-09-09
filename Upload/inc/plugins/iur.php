@@ -25,7 +25,8 @@ if(!defined("IN_MYBB"))
 	die("Direct initialization of this file is not allowed.");
 }
 
-
+$plugins->add_hook("admin_config_settings_change","iur_settings_change");
+$plugins->add_hook("admin_settings_print_peekers","iur_settings_peek");
 $plugins->add_hook("upload_attachment_thumb_start","iur_resize");
 
 
@@ -60,17 +61,7 @@ function iur_install()
 	$db->insert_query('settinggroups',$settings_group);
 	$gid = $db->insert_id();
 	
-	
-		$setting = array(
-		"name" 			=> "iur_enable",
-		"title" 		=> $lang->iur_enable_title,
-		"description" 	=> $lang->iur_enable_descr,
-		"optionscode" 	=> "yesno",
-		"value" 		=> "1",
-		"disporder" 	=> "2",
-		"gid" 			=> intval($gid)
-	);
-	$db->insert_query('settings',$setting);
+
 	
 		$setting = array(
 		"name" 			=> "iur_width_size",
@@ -78,7 +69,7 @@ function iur_install()
 		"description" 	=> $lang->iur_size_width_descr,
 		"optionscode" 	=> "numeric",
 		"value" 		=> "1200",
-		"disporder" 	=> "3",
+		"disporder" 	=> "2",
 		"gid" 			=> intval($gid)
 	);
 	$db->insert_query('settings',$setting);
@@ -89,12 +80,36 @@ function iur_install()
 		"description" 	=> $lang->iur_size_height_descr,
 		"optionscode" 	=> "numeric",
 		"value" 		=> "1200",
-		"disporder" 	=> "4",
+		"disporder" 	=> "3",
 		"gid" 			=> intval($gid)
 	);
 	$db->insert_query('settings',$setting);
 	
 
+	
+	
+		$setting = array(
+		"name" => 'iur_jpg_compression_setting',
+		"title" => $lang->iur_jpg_compression_setting_title,
+		"description" => $lang->iur_jpg_compression_setting_descr,
+		"optionscode" => 'yesno',
+		"value" => '0',
+		"disporder" => "4",
+		"gid" => intval($gid)
+	);
+	$db->insert_query('settings',$setting);
+	
+	
+		$setting = array(
+		"name" => 'iur_quality_setting',
+		"title" => $lang->iur_quality_setting_title,
+		"description" => $lang->iur_quality_setting_descr,
+		"optionscode" => 'numeric',
+		"value" => '85',
+		"disporder" => "5",
+		"gid" => intval($gid)
+	);
+	$db->insert_query('settings',$setting);
 	
 
 	rebuild_settings();
@@ -121,7 +136,7 @@ function iur_uninstall()
 	global $db;
 
 	$db->delete_query('settinggroups', "name = 'Image_Upload_Resize'");
-	$db->delete_query('settings', "name IN ('iur_enable', 'iur_width_size', 'iur_height_size' )");
+	$db->delete_query('settings', "name IN ('iur_enable', 'iur_width_size', 'iur_height_size', 'iur_jpg_compression_setting', 'iur_quality_setting' )");
 
 
 	rebuild_settings();
@@ -159,18 +174,24 @@ return $attacharray;
 	
 }
 
-function iur_parse()
+function iur_settings_change()
 {
-	
-};
-
-function iur_activate()
-{
-	
+	global $db,$mybb,$iur_settings_peeker;
+	//$info=iur_info();
+	$result=$db->simple_select("settinggroups","gid","name='Image_Upload_Resize'",array("limit"=>1));
+	$group=$db->fetch_array($result);
+	$iur_settings_peeker=($mybb->input["gid"]==$group["gid"])&&($mybb->request_method!="post");
+		file_put_contents(MYBB_ROOT."test/peekers.txt", print_r($iur_settings_peeker, true));
 }
-
-function iur_deactivate()
+function iur_settings_peek(&$peekers)
 {
+	global $db,$mybb, $iur_settings_peeker;
+	 if ($iur_settings_peeker) 
+		{
+        // Peeker for author moderation settings
+        $peekers[] = 'new Peeker($(".setting_iur_jpg_compression_setting"), $("#setting_iur_quality_setting"), /1/, true)';
+		}
+		 
 
 }
 ?>
