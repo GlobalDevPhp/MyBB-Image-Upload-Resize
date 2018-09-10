@@ -61,8 +61,6 @@ function iur_install()
 	$db->insert_query('settinggroups',$settings_group);
 	$gid = $db->insert_id();
 	
-
-	
 		$setting = array(
 		"name" 			=> "iur_width_size",
 		"title" 		=> $lang->iur_size_width_title,
@@ -84,30 +82,27 @@ function iur_install()
 		"gid" 			=> intval($gid)
 	);
 	$db->insert_query('settings',$setting);
-	
-
-	
-	
+		
 		$setting = array(
-		"name" => 'iur_jpg_compression_setting',
-		"title" => $lang->iur_jpg_compression_setting_title,
-		"description" => $lang->iur_jpg_compression_setting_descr,
-		"optionscode" => 'yesno',
-		"value" => '0',
-		"disporder" => "4",
-		"gid" => intval($gid)
+		"name" 			=> 'iur_jpg_compression_setting',
+		"title" 		=> $lang->iur_jpg_compression_setting_title,
+		"description" 	=> $lang->iur_jpg_compression_setting_descr,
+		"optionscode" 	=> 'yesno',
+		"value" 		=> '0',
+		"disporder" 	=> "4",
+		"gid" 			=> intval($gid)
 	);
 	$db->insert_query('settings',$setting);
 	
 	
 		$setting = array(
-		"name" => 'iur_quality_setting',
-		"title" => $lang->iur_quality_setting_title,
-		"description" => $lang->iur_quality_setting_descr,
-		"optionscode" => 'numeric',
-		"value" => '85',
-		"disporder" => "5",
-		"gid" => intval($gid)
+		"name" 			=> 'iur_quality_setting',
+		"title" 		=> $lang->iur_quality_setting_title,
+		"description" 	=> $lang->iur_quality_setting_descr,
+		"optionscode" 	=> 'numeric',
+		"value" 		=> '85',
+		"disporder" 	=> "5",
+		"gid" 			=> intval($gid)
 	);
 	$db->insert_query('settings',$setting);
 	
@@ -181,7 +176,7 @@ function iur_settings_change()
 	$result=$db->simple_select("settinggroups","gid","name='Image_Upload_Resize'",array("limit"=>1));
 	$group=$db->fetch_array($result);
 	$iur_settings_peeker=($mybb->input["gid"]==$group["gid"])&&($mybb->request_method!="post");
-		file_put_contents(MYBB_ROOT."test/peekers.txt", print_r($iur_settings_peeker, true));
+	
 }
 function iur_settings_peek(&$peekers)
 {

@@ -22,6 +22,6 @@ $l['iur_jpg_compression_setting_title'] = "JPG Compression";
 $l['iur_jpg_compression_setting_descr'] = "Do you want to use commpresion to futher reduce size? Note:too much comprssion will reduce quality";
 
 $l['iur_quality_setting_title'] = "Image quality";
-$l['iur_quality_setting_descr'] = "range: 75 to 99. The higher the number the better the quality";
+$l['iur_quality_setting_descr'] = "The higher the number the better the quality";
 
 ?>
