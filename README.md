@@ -1,5 +1,3 @@
-Image Upload Resizer v0.1
-////////////////////
+Image Upload Resizer v0.2 branch
 
-IUR is an image resizer that works during the upload process. it uses MyBB thumbnail code for the resizing.
 
