@@ -140,7 +140,9 @@ function iur_uninstall()
 function iur_resize($attacharray)
 {
 	//ini_set('display_errors', '1');
-	require_once MYBB_ROOT."inc/functions_image.php";
+	require_once MYBB_ROOT."inc/plugins/iur/functions_resize_image.php";
+	
+	
 	global $mybb, $db;
 
 	//hooks 'upload_attachment_thumb_start' to get image after upload and name change but before thumbnail is made.
@@ -153,12 +155,23 @@ function iur_resize($attacharray)
 	
 	//get upload folder and .attach name from $attacharray
 	$resize_path = explode('/', $attacharray[attachname]);
+	$upload_path = $mybb->settings['uploadspath'];
+	$resize_width = $mybb->settings['iur_width_size'];
+	$resize_height = $mybb->settings['iur_height_size'];
+	$jpg_compression = $mybb->settings[iur_jpg_compression_setting];
+	
+	if($jpg_compression = '1')
+	{
+		$quality = $mybb->settings['iur_quality_setting'];
+	} else {
+		$quality = 100;
+	}
 	
 	//use MyBB generate_thumbnail to resize and overwrite .attach image 
-	$upload = generate_thumbnail($mybb->settings['uploadspath']."/".$attacharray[attachname],$mybb->settings['uploadspath']."/".$resize_path[0],$resize_path[1], $mybb->settings['iur_width_size'], $mybb->settings['iur_height_size']);
+	$upload = generate_resize($upload_path."/".$attacharray[attachname],$upload_path."/".$resize_path[0],$resize_path[1], $resize_width, $resize_height, $quality);
 
 	//get new file size and update $attacharray
-	$size = filesize($mybb->settings['uploadspath']."/".$attacharray[attachname]);
+	$size = filesize($upload_path."/".$attacharray[attachname]);
 	$attacharray[filesize] = $size;
 
 	
