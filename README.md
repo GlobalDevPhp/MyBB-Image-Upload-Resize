@@ -1,4 +1,4 @@
-Image Upload Resize v0.1
+Image Upload Resize v0.2
 
 
 'Image Upload Resize' is a plugin for MyBB 1.8.18 that will resize members uploaded images on the fly.
@@ -11,3 +11,9 @@ https://community.mybb.com/thread-219642.html
 
 
 Thanks
+
+Change log:
+
+v0.2
+-cleaned up code
+-added ability to set compression
