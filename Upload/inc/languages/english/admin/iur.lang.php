@@ -12,13 +12,16 @@
 $l['iur_title'] = "Image Upload Resize";
 $l['iur_descr'] = "Reduce the size of images to your forum";
 
-$l['iur_enable_title'] = "Enable plugin?";
-$l['iur_enable_descr'] = "enabling this plugin will resize any jpg, gif or png uploaded to the forum ";
-
 $l['iur_size_width_title'] = "Maximum width";
-$l['iur_size_width_descr'] = "will reduces to width or height depending on image while keeping aspect ratio";
+$l['iur_size_width_descr'] = "";
 
 $l['iur_size_height_title'] = "Maximum height";
 $l['iur_size_height_descr'] = "";
+
+$l['iur_jpg_compression_setting_title'] = "JPG Compression";
+$l['iur_jpg_compression_setting_descr'] = "Do you want to use commpresion to futher reduce size? Note:too much comprssion will reduce quality";
+
+$l['iur_quality_setting_title'] = "Image quality";
+$l['iur_quality_setting_descr'] = "The higher the number the better the quality";
 
 ?>

@@ -25,7 +25,6 @@ if(!defined("IN_MYBB"))
 	die("Direct initialization of this file is not allowed.");
 }
 
-
 $plugins->add_hook("upload_attachment_thumb_start","iur_resize");
 
 
@@ -42,99 +41,83 @@ function iur_info()
 		"codename"		=>"IUR"
 	);
 }
-
 function iur_install()
 {
 	
 		global $db, $lang ;
-
 	$lang->load("iur");
 	
 		$settings_group = array(
 		"name" 			=> "Image_Upload_Resize",
-		"title"			=> $db->escape_string($lang->iur_title),
-		"description" 	=> $db->escape_string($lang->iur_descr),
+		"title"			=> $lang->iur_title,
+		"description" 	=> $lang->iur_descr,
 		"disporder" 	=> "1",
 		"isdefault" 	=> "no"
 	);
 	$db->insert_query('settinggroups',$settings_group);
 	$gid = $db->insert_id();
 	
-	
 		$setting = array(
-		"name" 			=> "iur_enable",
-		"title" 		=> $db->escape_string($lang->iur_enable_title),
-		"description" 	=> $db->escape_string($lang->iur_enable_descr),
-		"optionscode" 	=> "yesno",
-		"value" 		=> "1",
+		"name" 			=> "iur_width_size",
+		"title" 		=> $lang->iur_size_width_title,
+		"description" 	=> $lang->iur_size_width_descr,
+		"optionscode" 	=> "numeric",
+		"value" 		=> "1200",
 		"disporder" 	=> "2",
 		"gid" 			=> intval($gid)
 	);
 	$db->insert_query('settings',$setting);
 	
 		$setting = array(
-		"name" 			=> "iur_width_size",
-		"title" 		=> $db->escape_string($lang->iur_size_width_title),
-		"description" 	=> $db->escape_string($lang->iur_size_width_descr),
+		"name" 			=> "iur_height_size",
+		"title" 		=> $lang->iur_size_height_title,
+		"description" 	=> $lang->iur_size_height_descr,
 		"optionscode" 	=> "numeric",
 		"value" 		=> "1200",
 		"disporder" 	=> "3",
 		"gid" 			=> intval($gid)
 	);
-	$db->insert_query('settings',$setting);
-	
+	 $db->insert_query('settings',$setting);
+		
 		$setting = array(
-		"name" 			=> "iur_height_size",
-		"title" 		=> $db->escape_string($lang->iur_size_height_title),
-		"description" 	=> $db->escape_string($lang->iur_size_height_descr),
+		"name" 			=> "iur_quality_setting",
+		"title" 		=> $lang->iur_quality_setting_title,
+		"description" 	=> $lang->iur_quality_setting_descr,
 		"optionscode" 	=> "numeric",
-		"value" 		=> "1200",
-		"disporder" 	=> "4",
+		"value" 		=> "100",
+		"disporder" 	=> "5",
 		"gid" 			=> intval($gid)
 	);
 	$db->insert_query('settings',$setting);
 	
-
-	
-
 	rebuild_settings();
-
 }
-
 function iur_is_installed()
 {
     global $db;
-
 	$query = $db->simple_select("settinggroups", "*", "name='Image_Upload_Resize'");
 	$setting_group = $db->fetch_array($query);
-
     if($setting_group)
     {
         return true;
     }
-
     return false;
 }
-
 function iur_uninstall()
 {
 	global $db;
-
 	$db->delete_query('settinggroups', "name = 'Image_Upload_Resize'");
-	$db->delete_query('settings', "name IN ('iur_enable', 'iur_width_size', 'iur_height_size' )");
-
-
+	$db->delete_query('settings', "name IN ('iur_width_size', 'iur_height_size',  'iur_quality_setting' )");
 	rebuild_settings();
 }
-
 function iur_resize($attacharray)
 {
-	//ini_set('display_errors', '1');
-	require_once MYBB_ROOT."inc/functions_image.php";
+	ini_set('display_errors', '1');
+	require_once MYBB_ROOT."inc/plugins/iur/functions_resize_image.php";
+	
+	
 	global $mybb, $db;
-
 	//hooks 'upload_attachment_thumb_start' to get image after upload and name change but before thumbnail is made.
-
 	//return if $attacharray empty
 	if(!isset($attacharray))
 	{
@@ -143,34 +126,31 @@ function iur_resize($attacharray)
 	
 	//get upload folder and .attach name from $attacharray
 	$resize_path = explode('/', $attacharray[attachname]);
+	$image_type = $attacharray[type];
+	
+		//rebuild_settings();
+		
+	$upload_path = $mybb->settings['uploadspath'];
+	$resize_width = $mybb->settings['iur_width_size'];
+	$resize_height = $mybb->settings['iur_height_size'];
+	$jpg_compression = $mybb->settings['iur_jpg_compression_setting'];
+	
+	if($jpg_compression = "1")
+	{
+		$quality = $mybb->settings['iur_quality_setting'];
+	} 
+	if($jpg_compression = "0"){
+		$quality = 100;
+	}
 	
 	//use MyBB generate_thumbnail to resize and overwrite .attach image 
-	$upload = generate_thumbnail($mybb->settings['uploadspath']."/".$attacharray[attachname],$mybb->settings['uploadspath']."/".$resize_path[0],$resize_path[1], $mybb->settings['iur_width_size'], $mybb->settings['iur_height_size']);
-
+	$upload = generate_resize($upload_path."/".$attacharray[attachname],$upload_path."/".$resize_path[0],$resize_path[1], $resize_width, $resize_height, $quality);
 	//get new file size and update $attacharray
-	$size = filesize($mybb->settings['uploadspath']."/".$attacharray[attachname]);
+	$size = filesize($upload_path."/".$attacharray[attachname]);
 	$attacharray[filesize] = $size;
-
 	
 return $attacharray;
-
-
-	
 	
 }
 
-function iur_parse()
-{
-	
-};
-
-function iur_activate()
-{
-	
-}
-
-function iur_deactivate()
-{
-
-}
 ?>
