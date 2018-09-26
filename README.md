@@ -15,5 +15,7 @@ Thanks
 Change log:
 
 v0.2
+
 -cleaned up code
+
 -added ability to set compression
