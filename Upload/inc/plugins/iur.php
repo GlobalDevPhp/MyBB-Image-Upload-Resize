@@ -135,17 +135,11 @@ function iur_resize($attacharray)
 	$resize_height = $mybb->settings['iur_height_size'];
 	$jpg_compression = $mybb->settings['iur_jpg_compression_setting'];
 	
-	if($jpg_compression = "1")
-	{
-		$quality = $mybb->settings['iur_quality_setting'];
-	} 
-	if($jpg_compression = "0"){
-		$quality = 100;
-	}
 	
-	//use MyBB generate_thumbnail to resize and overwrite .attach image 
+	
+	//use MyBB generate_resize from functions_resize_image.php to resize and overwrite .attach image 
 	$upload = generate_resize($upload_path."/".$attacharray[attachname],$upload_path."/".$resize_path[0],$resize_path[1], $resize_width, $resize_height, $quality);
-	//get new file size and update $attacharray
+	//get new file size and update $attacharray and return
 	$size = filesize($upload_path."/".$attacharray[attachname]);
 	$attacharray[filesize] = $size;
 	
