@@ -137,7 +137,7 @@ function iur_resize($attacharray)
 	
 	
 	
-	//use MyBB generate_resize from functions_resize_image.php to resize and overwrite .attach image 
+	//use generate_resize from functions_resize_image.php to resize and overwrite .attach image 
 	$upload = generate_resize($upload_path."/".$attacharray[attachname],$upload_path."/".$resize_path[0],$resize_path[1], $resize_width, $resize_height, $quality);
 	//get new file size and update $attacharray and return
 	$size = filesize($upload_path."/".$attacharray[attachname]);

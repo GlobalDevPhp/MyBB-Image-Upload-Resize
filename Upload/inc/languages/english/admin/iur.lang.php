@@ -18,10 +18,7 @@ $l['iur_size_width_descr'] = "";
 $l['iur_size_height_title'] = "Maximum height";
 $l['iur_size_height_descr'] = "";
 
-$l['iur_jpg_compression_setting_title'] = "JPG Compression";
-$l['iur_jpg_compression_setting_descr'] = "Do you want to use commpresion to futher reduce size? Note:too much comprssion will reduce quality";
-
 $l['iur_quality_setting_title'] = "Image quality";
-$l['iur_quality_setting_descr'] = "The higher the number the better the quality";
+$l['iur_quality_setting_descr'] = "set between 50 ~ 100, The higher the number the better the quality but the bigger the file size";
 
 ?>
