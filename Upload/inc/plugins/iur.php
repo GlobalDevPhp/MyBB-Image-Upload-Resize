@@ -133,7 +133,7 @@ function iur_resize($attacharray)
 	$upload_path = $mybb->settings['uploadspath'];
 	$resize_width = $mybb->settings['iur_width_size'];
 	$resize_height = $mybb->settings['iur_height_size'];
-	$jpg_compression = $mybb->settings['iur_jpg_compression_setting'];
+	$jpg_compression = $mybb->settings['iur_quality_setting'];
 	
 	if($jpg_compression = "1")
 	{
@@ -144,7 +144,7 @@ function iur_resize($attacharray)
 	}
 	
 	//use MyBB generate_thumbnail to resize and overwrite .attach image 
-	$upload = generate_resize($upload_path."/".$attacharray[attachname],$upload_path."/".$resize_path[0],$resize_path[1], $resize_width, $resize_height, $quality);
+	$upload = generate_resize($upload_path."/".$attacharray[attachname],$upload_path."/".$resize_path[0],$resize_path[1], $resize_width, $resize_height, $jpg_compression);
 	//get new file size and update $attacharray
 	$size = filesize($upload_path."/".$attacharray[attachname]);
 	$attacharray[filesize] = $size;
